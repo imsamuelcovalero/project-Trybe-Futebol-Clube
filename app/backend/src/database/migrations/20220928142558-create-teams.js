@@ -8,24 +8,27 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      name: {
+      teamName: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'team_name',
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         field: 'created_at',
+        defaultValue: Sequelize.fn('now'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        field: 'updated_at',
+        defaultValue: Sequelize.fn('now'),
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    await queryInterface.dropTable('teams');
   }
 };
