@@ -3,7 +3,7 @@ import db from '.';
 
 class TeamModel extends Model {
   id!: number;
-  name!: string;
+  teamName!: string;
 }
 
 TeamModel.init(
