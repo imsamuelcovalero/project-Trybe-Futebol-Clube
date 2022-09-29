@@ -26,7 +26,7 @@ const tokenFunctions = {
     // console.log('token', token);
 
     if (!token) {
-      throw new CustomError(401, 'Token not found');
+      throw new CustomError(401, 'Token must be a valid token');
     }
 
     try {
@@ -38,7 +38,7 @@ const tokenFunctions = {
 
       next();
     } catch (err) {
-      throw new CustomError(401, 'Invalid token');
+      throw new CustomError(401, 'Token must be a valid token');
     }
   },
 };

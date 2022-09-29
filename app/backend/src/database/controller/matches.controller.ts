@@ -14,6 +14,7 @@ class MatchesController {
   // crria uma função saveMatchProgress para salvar uma partida com o status de inProgress como true no banco de dados
   saveNewMatch = async (req: Request, res: Response) => {
     const match = { ...req.body, inProgress: true };
+
     const newMatch = await this.matchesService.saveNewMatch(match);
 
     res.status(201).json(newMatch);
@@ -29,6 +30,16 @@ class MatchesController {
     // { "message": "Finished" }
 
     res.status(200).json({ message: 'Finished' });
+  };
+
+  // cria uma função updateMatch para atualizar uma partida em andamento
+  updateMatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const match = req.body;
+
+    const updatedMatch = await this.matchesService.updateMatch(id, match);
+
+    res.status(200).json(updatedMatch);
   };
 }
 
