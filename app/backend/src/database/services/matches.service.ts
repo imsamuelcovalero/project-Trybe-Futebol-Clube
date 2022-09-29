@@ -87,25 +87,13 @@ export default class TeamsService {
 
   updateMatch = async (id: string, match: MatcheModel): Promise<MatcheModel> => {
     const matchToUpdate = await MatcheModel.findByPk(id);
+    console.log('matchToUpdate', matchToUpdate);
 
     if (!matchToUpdate) {
       throw new CustomError(404, 'No match found');
     }
 
-    if (match.homeTeam === match.awayTeam) {
-      throw new CustomError(401, 'It is not possible to create a match with two equal teams');
-    }
-
-    const homeTeam = await TeamModel.findByPk(match.homeTeam);
-    const awayTeam = await TeamModel.findByPk(match.awayTeam);
-
-    if (!homeTeam || !awayTeam) {
-      throw new CustomError(404, 'There is no team with such id!');
-    }
-
-    matchToUpdate.homeTeam = match.homeTeam;
     matchToUpdate.homeTeamGoals = match.homeTeamGoals;
-    matchToUpdate.awayTeam = match.awayTeam;
     matchToUpdate.awayTeamGoals = match.awayTeamGoals;
 
     await matchToUpdate.save();

@@ -14,6 +14,7 @@ module.exports = {
         field: 'home_team',
         foreignKey: true,
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references: {
           model: 'teams',
           key: 'id',
@@ -30,6 +31,7 @@ module.exports = {
         field: 'away_team',
         foreignKey: true,
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references: {
           model: 'teams',
           key: 'id',

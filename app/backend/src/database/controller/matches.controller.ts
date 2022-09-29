@@ -25,15 +25,13 @@ class MatchesController {
     const { id } = req.params;
     await this.matchesService.finishMatch(id);
 
-    // Deve-se retornar, com um status 200, a seguinte mensagem:
-
-    // { "message": "Finished" }
-
     res.status(200).json({ message: 'Finished' });
   };
 
   // cria uma função updateMatch para atualizar uma partida em andamento
   updateMatch = async (req: Request, res: Response) => {
+    console.log('req.body', req.body);
+
     const { id } = req.params;
     const match = req.body;
 

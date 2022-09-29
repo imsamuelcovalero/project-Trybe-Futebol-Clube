@@ -21,8 +21,6 @@ export default class LoginService {
       },
     });
 
-    console.log('user', user);
-
     if (!user) {
       throw new CustomError(401, 'Incorrect email or password');
     }
