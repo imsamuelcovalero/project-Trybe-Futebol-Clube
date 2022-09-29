@@ -3,21 +3,13 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
-// function before(arg0: () => Promise<void>) {
-//   throw new Error('Function not implemented.');
-// }
-
-// function after(arg0: () => void) {
-//   throw new Error('Function not implemented.');
-// }
-
 import { app } from '../app';
+
 import UserModel from '../database/models/user.model';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 
 import { Response } from 'superagent';
-import { compareSync } from 'bcryptjs';
 
 chai.use(chaiHttp);
 
@@ -34,7 +26,6 @@ describe('Testes para login.service', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
-  // const loginService = new LoginService();
 
   let chaiHttpResponse: Response;
 
@@ -65,7 +56,7 @@ describe('Testes para login.service', () => {
 
     sinon
       .stub(bcrypt, 'compareSync')
-      .resolves(false)
+      .resolves(true)
 
     chaiHttpResponse = await chai
       .request(app).post('/login').send(loginMock);

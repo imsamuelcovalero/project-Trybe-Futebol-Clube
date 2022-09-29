@@ -1,7 +1,7 @@
-import { Jwt, sign, SignOptions, verify } from 'jsonwebtoken';
+import { sign, SignOptions, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 import { NextFunction, Request, Response } from 'express';
-import { ILogin } from '../interfaces/login.interface';
+// import { ILogin } from '../interfaces/login.interface';
 import { IUser } from '../interfaces/user.interface';
 import { IDecoded, IGetUserAuthInfoRequest } from '../interfaces/decoded.interface';
 import CustomError from '../errors/CustomError';
@@ -11,13 +11,13 @@ import CustomError from '../errors/CustomError';
 const secret = process.env.JWT_SECRET || 'secret';
 
 const tokenFunctions = {
-  generateToken: (user: ILogin) => {
+  generateToken: (user: IUser) => {
     const signOptions: SignOptions = {
       expiresIn: '7d',
       algorithm: 'HS256',
     };
 
-    const token = sign({ id: user.id, username: user.email }, secret, signOptions);
+    const token = sign({ id: user.id, username: user.email, role: user.role }, secret, signOptions);
     return token;
   },
 
@@ -32,6 +32,7 @@ const tokenFunctions = {
     try {
       // decodifica o token e atribui a uma constante decoded
       const decoded = verify(token, secret) as unknown as IDecoded;
+      console.log('decoded', decoded);
 
       (req as IGetUserAuthInfoRequest).user = decoded;
 

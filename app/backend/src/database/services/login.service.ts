@@ -24,7 +24,7 @@ export default class LoginService {
     console.log('user', user);
 
     if (!user) {
-      throw new CustomError(401, 'User not found');
+      throw new CustomError(401, 'Incorrect email or password');
     }
 
     const isPasswordValid = bcrypt.compareSync(password, user.password);
