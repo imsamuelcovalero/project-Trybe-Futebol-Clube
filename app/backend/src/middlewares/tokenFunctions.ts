@@ -1,4 +1,4 @@
-import { Jwt, sign, SignOptions } from 'jsonwebtoken';
+import { Jwt, sign, SignOptions, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 import { NextFunction, Request, Response } from 'express';
 import { ILogin } from '../interfaces/login.interface';
@@ -8,16 +8,16 @@ import CustomError from '../errors/CustomError';
 
 // dotenv.config();
 
-const jwtSecret = 'secret';
+const secret = process.env.JWT_SECRET || 'secret';
 
 const tokenFunctions = {
-  generateToken: (user: IUser | ILogin) => {
+  generateToken: (user: ILogin) => {
     const signOptions: SignOptions = {
       expiresIn: '7d',
       algorithm: 'HS256',
     };
 
-    const token = sign({ id: user.id, username: user.username }, jwtSecret, signOptions);
+    const token = sign({ id: user.id, username: user.email }, secret, signOptions);
     return token;
   },
 
@@ -31,7 +31,7 @@ const tokenFunctions = {
 
     try {
       // decodifica o token e atribui a uma constante decoded
-      const decoded = jwt.verify(token, jwtSecret) as unknown as IDecoded;
+      const decoded = verify(token, secret) as unknown as IDecoded;
 
       (req as IGetUserAuthInfoRequest).user = decoded;
 
