@@ -1,5 +1,3 @@
-//password não é obrigatório em Ilogin
-
 export interface ILogin {
   id?: number;
   email: string;

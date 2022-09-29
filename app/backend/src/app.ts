@@ -11,7 +11,6 @@ class App {
 
     this.config();
 
-    // usa a rota loginRoute
     this.app.use('/login', loginRoute);
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));

@@ -1,13 +1,13 @@
 import { Model, INTEGER, STRING } from 'sequelize';
 import db from '.';
 
-class User extends Model {
+class UserModel extends Model {
   public id!: number;
   public email!: string;
   public password!: string;
 }
 
-User.init(
+UserModel.init(
   {
     id: {
       type: INTEGER,
@@ -30,14 +30,6 @@ User.init(
       type: STRING,
       allowNull: false,
     },
-    createdAt: {
-      type: STRING,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: STRING,
-      allowNull: false,
-    },
   },
   {
     sequelize: db,
@@ -47,4 +39,4 @@ User.init(
   },
 );
 
-export default User;
+export default UserModel;
