@@ -4,6 +4,7 @@ import errorMiddleware from './middlewares/error.middleware';
 import loginRoute from './routers/login.route';
 import teamsRoute from './routers/teams.route';
 import matchesRoute from './routers/matches.route';
+import leaderboardRoute from './routers/leaderboard.route';
 
 class App {
   public app: express.Express;
@@ -16,6 +17,7 @@ class App {
     this.app.use('/login', loginRoute);
     this.app.use('/teams', teamsRoute);
     this.app.use('/matches', matchesRoute);
+    this.app.use('/leaderboard', leaderboardRoute);
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
 
