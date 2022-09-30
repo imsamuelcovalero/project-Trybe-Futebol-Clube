@@ -45,14 +45,14 @@ export default class LeaderboardService extends MatcheService {
   // };
 
   getHomeLeaderboard = async (): Promise<ILeaderboard[]> => {
-    const teams = await leaderboardServiceUtils.getAllTeams();
+    const teams = await leaderboardServiceUtils.getHomeTeams();
     console.log('teams', teams);
 
     // cria uma variavel que recebe monta o array com os valores da tabela de classificação
-    const leaderboard = (await teams).map((team) => ({
+    const leaderboard = teams.map((team) => ({
       name: team.teamName,
-      totalPoints: leaderboardServiceUtils.getTotalPoints(team),
-      totalGames: leaderboardServiceUtils.getTotalGames(team),
+      totalPoints: leaderboardServiceUtils.getHomeTotalPoints(team),
+      totalGames: leaderboardServiceUtils.getTotalHomeGames(team),
       totalVictories: leaderboardServiceUtils.getTotalVictories(team),
       totalDraws: leaderboardServiceUtils.getTotalDraws(team),
       totalLosses: leaderboardServiceUtils.getTotalLosses(team),

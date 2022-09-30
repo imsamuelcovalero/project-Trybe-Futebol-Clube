@@ -31,8 +31,21 @@ const leaderboardServiceUtils = {
     return teams as unknown as ITeam[];
   },
 
-  // cria um método que retorna o total de pontos de um time a partir do resultado de getAllTeams
-  getTotalPoints: (team: ITeam): number => {
+  getHomeTeams: async (): Promise<ITeam[]> => {
+    const teams = await TeamModel.findAll({
+      include: [firstInclude],
+    });
+    return teams as unknown as ITeam[];
+  },
+
+  // cria um metodo para que recebe o resultado de getAllTeams e filtra para retornar só os times que jogaram em casa
+  // getHomeTeams: (): ITeam[] => {
+  //   const teams = leaderboardServiceUtils.getAllTeams();
+  //   const homeTeams = teams.filter((team) => team.matchHome.length > 0);
+  //   return homeTeams;
+  // },
+
+  getHomeTotalPoints: (team: ITeam): number => {
     // para cada partida do array matchHome e do array matchAway, faz um forEach calculando a pontuação e retorna o total
     const matchHomePoints = team.matchHome.map((match) => {
       let subResult = 0;
@@ -40,81 +53,105 @@ const leaderboardServiceUtils = {
       const empate = match.homeTeamGoals === match.awayTeamGoals;
       // const homeLose = match.homeTeamGoals < match.awayTeamGoals;
 
-      if (homeWin) subResult += 3; if (empate) subResult += 3; else subResult += 0;
+      if (homeWin) subResult += 3; if (empate) subResult += 1; else subResult += 0;
 
       return subResult;
     });
 
-    const matchAwayPoints = team.matchAway.map((match) => {
-      let subResult = 0;
-      const awayWin = match.homeTeamGoals < match.awayTeamGoals;
-      const empate = match.homeTeamGoals === match.awayTeamGoals;
-      // const awayLose = match.homeTeamGoals > match.awayTeamGoals;
-
-      if (awayWin) subResult += 3; if (empate) subResult += 3; else subResult += 0;
-      return subResult;
-    });
-
-    const totalPoints = matchHomePoints.reduce((acc, curr) => acc + curr, 0) + matchAwayPoints
-      .reduce((acc, curr) => acc + curr, 0);
+    const totalPoints = matchHomePoints.reduce((acc, curr) => acc + curr, 0);
 
     return totalPoints;
   },
 
-  // cria um método que retorna o total de jogos de um time a partir do resultado de getAllTeams
-  getTotalGames: (team: ITeam): number => {
-    const totalGames = team.matchHome.length + team.matchAway.length;
+  // cria um método que retorna o total de pontos de um time a partir do resultado de getAllTeams
+  // getTotalPoints: (team: ITeam): number => {
+  //   // para cada partida do array matchHome e do array matchAway, faz um forEach calculando a pontuação e retorna o total
+  //   const matchHomePoints = team.matchHome.map((match) => {
+  //     let subResult = 0;
+  //     const homeWin = match.homeTeamGoals > match.awayTeamGoals;
+  //     const empate = match.homeTeamGoals === match.awayTeamGoals;
+  //     // const homeLose = match.homeTeamGoals < match.awayTeamGoals;
+
+  //     if (homeWin) subResult += 3; if (empate) subResult += 1; else subResult += 0;
+
+  //     return subResult;
+  //   });
+
+  //   const matchAwayPoints = team.matchAway.map((match) => {
+  //     let subResult = 0;
+  //     const awayWin = match.homeTeamGoals < match.awayTeamGoals;
+  //     const empate = match.homeTeamGoals === match.awayTeamGoals;
+  //     // const awayLose = match.homeTeamGoals > match.awayTeamGoals;
+
+  //     if (awayWin) subResult += 3; if (empate) subResult += 1; else subResult += 0;
+  //     return subResult;
+  //   });
+
+  //   const totalPoints = matchHomePoints.reduce((acc, curr) => acc + curr, 0) + matchAwayPoints
+  //     .reduce((acc, curr) => acc + curr, 0);
+
+  //   return totalPoints;
+  // },
+
+  getTotalHomeGames: (team: ITeam): number => {
+    const totalGames = team.matchHome.length;
     return totalGames;
   },
+
+  // cria um método que retorna o total de jogos de um time a partir do resultado de getAllTeams
+  // getTotalGames: (team: ITeam): number => {
+  //   const totalGames = team.matchHome.length + team.matchAway.length;
+  //   return totalGames;
+  // },
 
   // cria um método que retorna o total de vitórias de um time a partir do resultado de getAllTeams
   getTotalVictories: (team: ITeam): number => {
     const matchHomeVictories = team.matchHome
       .filter((match) => match.homeTeamGoals > match.awayTeamGoals).length;
-    const matchAwayVictories = team.matchAway
-      .filter((match) => match.homeTeamGoals < match.awayTeamGoals).length;
-    const totalVictories = matchHomeVictories + matchAwayVictories;
-    return totalVictories;
+    // const matchAwayVictories = team.matchAway
+    //   .filter((match) => match.homeTeamGoals < match.awayTeamGoals).length;
+    // const totalVictories = matchHomeVictories + matchAwayVictories;
+    return matchHomeVictories;
   },
 
   // cria um método que retorna o total de empates de um time a partir do resultado de getAllTeams
   getTotalDraws: (team: ITeam): number => {
     const matchHomeDraws = team.matchHome
       .filter((match) => match.homeTeamGoals === match.awayTeamGoals).length;
-    const matchAwayDraws = team.matchAway
-      .filter((match) => match.homeTeamGoals === match.awayTeamGoals).length;
-    const totalDraws = matchHomeDraws + matchAwayDraws;
-    return totalDraws;
+    // const matchAwayDraws = team.matchAway
+    //   .filter((match) => match.homeTeamGoals === match.awayTeamGoals).length;
+    // const totalDraws = matchHomeDraws + matchAwayDraws;
+    return matchHomeDraws;
   },
 
   // cria um método que retorna o total de derrotas de um time a partir do resultado de getAllTeams
   getTotalLosses: (team: ITeam): number => {
     const matchHomeLosses = team.matchHome
       .filter((match) => match.homeTeamGoals < match.awayTeamGoals).length;
-    const matchAwayLosses = team.matchAway
-      .filter((match) => match.homeTeamGoals > match.awayTeamGoals).length;
-    const totalLosses = matchHomeLosses + matchAwayLosses;
-    return totalLosses;
+    // const matchAwayLosses = team.matchAway
+    //   .filter((match) => match.homeTeamGoals > match.awayTeamGoals).length;
+    // const totalLosses = matchHomeLosses + matchAwayLosses;
+    return matchHomeLosses;
   },
 
   // cria um método que retorna o total de gols a favor de um time a partir do resultado de getAllTeams
   getGoalsFavor: (team: ITeam): number => {
     const matchHomeGoalsFavor = team.matchHome
       .map((match) => match.homeTeamGoals).reduce((a, b) => a + b, 0);
-    const matchAwayGoalsFavor = team.matchAway
-      .map((match) => match.awayTeamGoals).reduce((a, b) => a + b, 0);
-    const goalsFavor = matchHomeGoalsFavor + matchAwayGoalsFavor;
-    return goalsFavor;
+    // const matchAwayGoalsFavor = team.matchAway
+    //   .map((match) => match.awayTeamGoals).reduce((a, b) => a + b, 0);
+    // const goalsFavor = matchHomeGoalsFavor + matchAwayGoalsFavor;
+    return matchHomeGoalsFavor;
   },
 
   // cria um método que retorna o total de gols recebidos de um time a partir do resultado de getAllTeams
   getGoalsOwn: (team: ITeam): number => {
     const matchHomeGoalsOwn = team.matchHome
       .map((match) => match.awayTeamGoals).reduce((a, b) => a + b, 0);
-    const matchAwayGoalsOwn = team.matchAway
-      .map((match) => match.homeTeamGoals).reduce((a, b) => a + b, 0);
-    const goalsOwn = matchHomeGoalsOwn + matchAwayGoalsOwn;
-    return goalsOwn;
+    // const matchAwayGoalsOwn = team.matchAway
+    //   .map((match) => match.homeTeamGoals).reduce((a, b) => a + b, 0);
+    // const goalsOwn = matchHomeGoalsOwn + matchAwayGoalsOwn;
+    return matchHomeGoalsOwn;
   },
 
   // cria um método que retorna o saldo de gols de um time a partir do resultado de getAllTeams
@@ -127,8 +164,8 @@ const leaderboardServiceUtils = {
 
   // cria um método que retorna o aproveitamento de um time a partir do resultado de getAllTeams
   getTeamPerformance: (team: ITeam): number => {
-    const totalPoints = leaderboardServiceUtils.getTotalPoints(team);
-    const totalGames = leaderboardServiceUtils.getTotalGames(team);
+    const totalPoints = leaderboardServiceUtils.getHomeTotalPoints(team);
+    const totalGames = leaderboardServiceUtils.getTotalHomeGames(team);
     const teamPerformance = (totalPoints / (totalGames * 3)) * 100;
     return teamPerformance;
   },
