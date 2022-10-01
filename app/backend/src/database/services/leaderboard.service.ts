@@ -1,7 +1,9 @@
 import MatcheModel from '../models/match.model';
 import MatcheService from './matches.service';
-import TeamModel from '../models/team.model';
-import leaderboardServiceUtils from './utils/LeaderboardService.utils';
+// import TeamModel from '../models/team.model';
+import leaderboardHome from './utils/leaderboardHome.utils';
+import leaderboardAway from './utils/leaderboardAway.utils';
+import leaderboard from './utils/leaderboard.utils';
 import { /* ITeam,  */ILeaderboard } from '../../interfaces/leaderboard.interface';
 // import CustomError from '../../errors/CustomError';
 
@@ -13,80 +15,68 @@ export default class LeaderboardService extends MatcheService {
     this.model = new MatcheModel();
   }
 
-  // cria um metodo para pegar todos os times filtrando por inProgress = false
-  getAllInProgessMatches = async (): Promise<MatcheModel[]> => {
-    const matches = await MatcheModel.findAll({
-      where: {
-        inProgress: false,
-      },
-      include: [
-        {
-          model: TeamModel,
-          as: 'teamHome',
-          attributes: ['teamName'],
-        },
-        {
-          model: TeamModel,
-          as: 'teamAway',
-          attributes: ['teamName'],
-        },
-      ],
-    });
-
-    return matches;
-  };
-
-  // cria um metodo para pegar todos os times
-  // getAllTeams = async (): Promise<TeamModel[]> => {
-  //   const teams = leaderboardServiceUtils.getAllTeams();
-  //   console.log('teams', teams);
-
-  //   return teams;
-  // };
-
   getHomeLeaderboard = async (): Promise<ILeaderboard[]> => {
-    const teams = await leaderboardServiceUtils.getHomeTeams();
-    console.log('teams', teams);
+    const teams = await leaderboardHome.getHomeTeams();
 
-    // cria uma variavel que recebe monta o array com os valores da tabela de classificação
-    const leaderboard = teams.map((team) => ({
+    // cria uma constante que recebe monta o array com os valores da tabela de classificação em casa
+    const homeLeaderboard = teams.map((team) => ({
       name: team.teamName,
-      totalPoints: leaderboardServiceUtils.getHomeTotalPoints(team),
-      totalGames: leaderboardServiceUtils.getTotalHomeGames(team),
-      totalVictories: leaderboardServiceUtils.getTotalVictories(team),
-      totalDraws: leaderboardServiceUtils.getTotalDraws(team),
-      totalLosses: leaderboardServiceUtils.getTotalLosses(team),
-      goalsFavor: leaderboardServiceUtils.getGoalsFavor(team),
-      goalsOwn: leaderboardServiceUtils.getGoalsOwn(team),
-      goalsBalance: leaderboardServiceUtils.getGoalsBalance(team),
-      efficiency: leaderboardServiceUtils.getTeamPerformance(team),
+      totalPoints: leaderboardHome.getTotalHomePoints(team),
+      totalGames: leaderboardHome.getTotalHomeGames(team),
+      totalVictories: leaderboardHome.getTotalHomeVictories(team),
+      totalDraws: leaderboardHome.getTotalHomeDraws(team),
+      totalLosses: leaderboardHome.getTotalHomeLosses(team),
+      goalsFavor: leaderboardHome.getHomeGoalsFavor(team),
+      goalsOwn: leaderboardHome.getHomeGoalsOwn(team),
+      goalsBalance: leaderboardHome.getHomeGoalsBalance(team),
+      efficiency: leaderboardHome.getHomePerformance(team),
     }));
 
-    // O resultado deverá ser ordenado sempre de forma decrescente, levando em consideração a quantidade de pontos que o time acumulou. Em caso de empate no Total de Pontos, você deve levar em consideração os seguintes critérios para desempate:
-    //     Ordem para desempate
-    // 1º Total de Vitórias; 2º Saldo de gols; 3º Gols a favor; 4º Gols sofridos.
-    const sortedLeaderboard = leaderboardServiceUtils.getLeaderboardOrdered(leaderboard);
+    const sortedLeaderboard = leaderboardHome.getLeaderboardOrdered(homeLeaderboard);
 
-    // const matchs = await this.getAllMatches();
+    return sortedLeaderboard as unknown as ILeaderboard[];
+  };
 
-    // const matchsInProgress = matchs.filter((match) => match.inProgress === false);
+  getAwayLeaderboard = async (): Promise<ILeaderboard[]> => {
+    const teams = await leaderboardAway.getAwayTeams();
 
-    // const leaderboard = matchsInProgress.map((match) => {
-    //   const name = match.teamHome;
-    //   const totalPoints = match.homeTeamGoals > match.awayTeamGoals ? 3 : match.homeTeamGoals === match.awayTeamGoals ? 1 : 0;
-    //   const totalGames = matchsInProgress.filter((match) => match.teamHome === name || match.teamAway === name).length;
-    //   const totalVictories = matchsInProgress.filter((match) => match.teamHome === name && match.homeTeamGoals > match.awayTeamGoals).length;
-    //   const totalDraws = matchsInProgress.filter((match) => match.teamHome === name && match.homeTeamGoals === match.awayTeamGoals).length;
-    //   const totalLosses = matchsInProgress.filter((match) => match.teamHome === name && match.homeTeamGoals < match.awayTeamGoals).length;
-    //   const goalsFavor = matchsInProgress.filter((match) => match.teamHome === name).reduce((acc, match) => acc + match.homeTeamGoals, 0);
-    //   const goalsOwn = matchsInProgress.filter((match) => match.teamHome === name).reduce((acc, match) => acc + match.awayTeamGoals, 0);
-    //   const goalsBalance = goalsFavor - goalsOwn;
-    //   const efficiency = (totalPoints / (totalGames * 3)) * 100;
+    // cria uma constante que recebe monta o array com os valores da tabela de classificação fora de casa
+    const awayLeaderboard = teams.map((team) => ({
+      name: team.teamName,
+      totalPoints: leaderboardAway.getTotalAwayPoints(team),
+      totalGames: leaderboardAway.getTotalAwayGames(team),
+      totalVictories: leaderboardAway.getTotalAwayVictories(team),
+      totalDraws: leaderboardAway.getTotalAwayDraws(team),
+      totalLosses: leaderboardAway.getTotalAwayLosses(team),
+      goalsFavor: leaderboardAway.getAwayGoalsFavor(team),
+      goalsOwn: leaderboardAway.getAwayGoalsOwn(team),
+      goalsBalance: leaderboardAway.getAwayGoalsBalance(team),
+      efficiency: leaderboardAway.getAwayPerformance(team),
+    }));
 
-    //   return { name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor, goalsOwn, goalsBalance, efficiency };
-    // });
+    const sortedLeaderboard = leaderboardAway.getLeaderboardOrdered(awayLeaderboard);
 
-    // console.log('leaderboard', leaderboard);
+    return sortedLeaderboard as unknown as ILeaderboard[];
+  };
+
+  getLeaderboard = async (): Promise<ILeaderboard[]> => {
+    const teams = await leaderboard.getAllTeams();
+
+    // cria uma constante que recebe monta o array com os valores da tabela de classificação fora de casa
+    const fullLeaderboard = teams.map((team) => ({
+      name: team.teamName,
+      totalPoints: leaderboard.getTotalPoints(team),
+      totalGames: leaderboard.getTotalGames(team),
+      totalVictories: leaderboard.getTotalVictories(team),
+      totalDraws: leaderboard.getTotalDraws(team),
+      totalLosses: leaderboard.getTotalLosses(team),
+      goalsFavor: leaderboard.getGoalsFavor(team),
+      goalsOwn: leaderboard.getGoalsOwn(team),
+      goalsBalance: leaderboard.getGoalsBalance(team),
+      efficiency: leaderboard.getTeamPerformance(team),
+    }));
+
+    const sortedLeaderboard = leaderboard.getLeaderboardOrdered(fullLeaderboard);
 
     return sortedLeaderboard as unknown as ILeaderboard[];
   };
