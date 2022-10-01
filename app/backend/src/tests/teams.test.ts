@@ -45,6 +45,19 @@ describe('Testes para rota teams', () => {
     // expect(chaiHttpResponse.body[0]).to.have.property('teamName');
   });
 
+  it('Deve retornar um time buscado pelo id com sucesso', async () => {
+    sinon
+      .stub(TeamModel, "findByPk")
+      .resolves({ id: 1, teamName: 'teste' } as TeamModel);
+
+    chaiHttpResponse = await chai
+      .request(app).get('/teams/1');
+
+    expect(chaiHttpResponse.status).to.be.equal(200);
+    expect(chaiHttpResponse.body).to.be.an('object');
+    expect(chaiHttpResponse.body).to.have.all.keys(['id', 'teamName']);
+  });
+
   // it('Seu sub-teste', () => {
   //   expect(false).to.be.eq(true);
   // });

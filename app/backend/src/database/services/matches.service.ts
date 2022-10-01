@@ -1,16 +1,16 @@
-import MatcheModel from '../models/match.model';
+import MatchModel from '../models/match.model';
 import TeamModel from '../models/team.model';
 import CustomError from '../../errors/CustomError';
 
 export default class MatcheService {
-  model: MatcheModel;
+  model: MatchModel;
 
   constructor() {
-    this.model = new MatcheModel();
+    this.model = new MatchModel();
   }
 
-  getAllMatches = async (): Promise<MatcheModel[]> => {
-    const matches = await MatcheModel.findAll({
+  getAllMatches = async (): Promise<MatchModel[]> => {
+    const matches = await MatchModel.findAll({
       include: [
         {
           model: TeamModel,
@@ -32,7 +32,7 @@ export default class MatcheService {
     return matches;
   };
 
-  saveNewMatch = async (match: MatcheModel): Promise<MatcheModel> => {
+  saveNewMatch = async (match: MatchModel): Promise<MatchModel> => {
     if (match.homeTeam === match.awayTeam) {
       throw new CustomError(401, 'It is not possible to create a match with two equal teams');
     }
@@ -44,7 +44,7 @@ export default class MatcheService {
       throw new CustomError(404, 'There is no team with such id!');
     }
 
-    const newMatch = await MatcheModel.create(match);
+    const newMatch = await MatchModel.create(match);
 
     if (!newMatch) {
       throw new CustomError(400, 'Error creating match');
@@ -53,8 +53,8 @@ export default class MatcheService {
     return newMatch;
   };
 
-  finishMatch = async (id: string): Promise<MatcheModel> => {
-    const match = await MatcheModel.findByPk(id);
+  finishMatch = async (id: string): Promise<MatchModel> => {
+    const match = await MatchModel.findByPk(id);
 
     if (!match) {
       throw new CustomError(404, 'No match found');
@@ -67,8 +67,8 @@ export default class MatcheService {
     return match;
   };
 
-  updateMatch = async (id: string, match: MatcheModel): Promise<MatcheModel> => {
-    const matchToUpdate = await MatcheModel.findByPk(id);
+  updateMatch = async (id: string, match: MatchModel): Promise<MatchModel> => {
+    const matchToUpdate = await MatchModel.findByPk(id);
     console.log('matchToUpdate', matchToUpdate);
 
     if (!matchToUpdate) {

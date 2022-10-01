@@ -20,6 +20,16 @@ const loginMock = {
   password: '123456',
 };
 
+const adminLoginMock = {
+  email: 'admin@admin.com',
+  password: 'secret_admin',
+};
+
+const userLoginMock = {
+  email: 'user@user.com',
+  password: 'secret_user',
+};
+
 const tokenMock = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjU0NTI3MTg5fQ.XS_9AA82iNoiVaASi0NtJpqOQ_gHSHhxrpIdigiT-fc';
 
 describe('Testes para login.service', () => {
@@ -90,6 +100,64 @@ describe('Testes para login.service', () => {
       message: 'All fields must be filled'
     });
   });
+
+  // it('Deve retornar o role do usuário ao logar pela rota /login/validate', async () => {
+  //   // simula com sinon.stub receber um token válido e retornar o role do usuário
+
+  //   sinon
+  //     .stub(jwt, 'verify')
+  //     .resolves({
+  //       role: 'admin'
+  //     } as jwt.JwtPayload);
+
+
+  //   chaiHttpResponse = await chai
+  //     .request(app).get('/login/validate').set('Authorization', `Bearer ${tokenMock}`)
+  //     .end((err, res) => {
+  //       expect(res.status).to.be.equal(200);
+  //       expect(res.body).to.deep.equal({ role: 'admin' });
+
+  //       if (err) {
+  //         throw err;
+  //       }
+  //     });
+
+  //   expect(chaiHttpResponse.status).to.be.equal(200);
+  //   expect(chaiHttpResponse.body).to.deep.equal({
+  //     role: 'admin'
+  //   });
+
+  //   sinon.stub(jwt, 'verify').throws();
+
+  //   chaiHttpResponse = await chai
+  //     .request(app).get('/login/validate').set('Authorization', `Bearer ${tokenMock}`)
+  //     .end((err, res) => {
+  //       expect(res.status).to.be.equal(401);
+  //       expect(res.body).to.deep.equal({ message: 'Unauthorized' });
+
+  //       if (err) {
+  //         throw err;
+  //       }
+  //     });
+
+  //   expect(chaiHttpResponse.status).to.be.equal(401);
+  //   expect(chaiHttpResponse.body).to.deep.equal({
+  //     message: 'Unauthorized'
+  //   });
+  // });
+
+
+  // chaiHttpResponse = await chai
+  //   .request(app).get('/login/validate').set({ "authorization": `Bearer ${tokenMock}` })
+  //   .send();
+
+  // console.log('xablau', chaiHttpResponse.body);
+
+
+  // expect(chaiHttpResponse.status).to.be.equal(200);
+  // expect(chaiHttpResponse.body).to.deep.equal({
+  //   role: 'admin'
+  // });
 
   // it('Seu sub-teste', () => {
   //   expect(false).to.be.eq(true);

@@ -1,7 +1,6 @@
 import { sign, SignOptions, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 import { NextFunction, Request, Response } from 'express';
-// import { ILogin } from '../interfaces/login.interface';
 import { IUser } from '../interfaces/user.interface';
 import { IDecoded, IGetUserAuthInfoRequest } from '../interfaces/decoded.interface';
 import CustomError from '../errors/CustomError';

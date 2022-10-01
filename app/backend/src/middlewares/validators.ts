@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi = require('joi');
 import CustomError from '../errors/CustomError';
-// import newUserSchema from './joySchemaNewUser';
 
 const validators = {
   validateLogin(req: Request, _res: Response, next: NextFunction) {
