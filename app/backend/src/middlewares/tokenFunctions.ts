@@ -31,7 +31,7 @@ const tokenFunctions = {
     try {
       // decodifica o token e atribui a uma constante decoded
       const decoded = verify(token, secret) as unknown as IDecoded;
-      // console.log('decoded', decoded);
+      console.log('decoded', decoded);
 
       (req as IGetUserAuthInfoRequest).user = decoded;
 

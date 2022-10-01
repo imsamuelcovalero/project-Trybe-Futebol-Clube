@@ -31,8 +31,6 @@ export default class LoginService {
       throw new CustomError(401, 'Incorrect password');
     }
 
-    // const userToToken = { id: user.id, email: user.email };
-
     const token = tokenValidator.generateToken(user);
 
     return token;

@@ -1,11 +1,4 @@
-// import { Model, CreationAttributes } from 'sequelize';
 import { IMatch } from './match.interface';
-
-// interface IModel<T extends Model> {
-//   create(obj: CreationAttributes<T>): Promise<T>,
-// }
-
-// export default IModel;
 
 // Cria uma interface para a leaderboard
 export interface ILeaderboard/* <T extends Model>  */ {
@@ -28,6 +21,4 @@ export interface ITeam {
   teamName: string;
   matchHome: IMatch[];
   matchAway: IMatch[];
-  // goalsFavor: number;
-  // goalsOwn: number;
 }

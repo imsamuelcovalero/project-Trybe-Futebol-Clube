@@ -69,7 +69,6 @@ export default class MatcheService {
 
   updateMatch = async (id: string, match: MatchModel): Promise<MatchModel> => {
     const matchToUpdate = await MatchModel.findByPk(id);
-    console.log('matchToUpdate', matchToUpdate);
 
     if (!matchToUpdate) {
       throw new CustomError(404, 'No match found');

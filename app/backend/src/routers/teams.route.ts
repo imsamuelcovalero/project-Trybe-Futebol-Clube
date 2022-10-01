@@ -1,7 +1,5 @@
 import { Router } from 'express';
 import TeamsController from '../database/controller/teams.controller';
-// import validators from '../middlewares/validators';
-// import tokenValidator from '../middlewares/tokenFunctions';
 
 const routers = Router();
 

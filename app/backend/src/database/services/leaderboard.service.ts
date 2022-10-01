@@ -1,11 +1,9 @@
 import MatcheModel from '../models/match.model';
 import MatcheService from './matches.service';
-// import TeamModel from '../models/team.model';
 import leaderboardHome from './utils/leaderboardHome.utils';
 import leaderboardAway from './utils/leaderboardAway.utils';
 import leaderboard from './utils/leaderboard.utils';
-import { /* ITeam,  */ILeaderboard } from '../../interfaces/leaderboard.interface';
-// import CustomError from '../../errors/CustomError';
+import { ILeaderboard } from '../../interfaces/leaderboard.interface';
 
 export default class LeaderboardService extends MatcheService {
   model: MatcheModel;
