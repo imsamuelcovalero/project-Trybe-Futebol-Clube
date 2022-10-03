@@ -17,7 +17,7 @@ npm install
   docker-compose up -d
   *A aplicação frontend estará rodando na porta 3000: http://localhost:3000/ do navegador e as requisições HTTP podem ser feitas na porta 3001: http://localhost:3001/ através do Insomnia, Postman ou outro API client. 
   ```
-  * Para subir o nodemon e poder fazer as requisições:
+  * Para fazer as requisições e visualizar os logs:
     ```
     Instale as dependências dentro do backend
     Execute o comando para acessar o terminal do docker: docker exec -it app_backend sh
