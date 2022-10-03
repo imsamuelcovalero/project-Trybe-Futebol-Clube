@@ -38,7 +38,6 @@ export default class LeaderboardService extends MatcheService {
   getAwayLeaderboard = async (): Promise<ILeaderboard[]> => {
     const teams = await leaderboardAway.getAwayTeams();
 
-    // cria uma constante que recebe monta o array com os valores da tabela de classificação fora de casa
     const awayLeaderboard = teams.map((team) => ({
       name: team.teamName,
       totalPoints: leaderboardAway.getTotalAwayPoints(team),
@@ -60,7 +59,6 @@ export default class LeaderboardService extends MatcheService {
   getLeaderboard = async (): Promise<ILeaderboard[]> => {
     const teams = await leaderboard.getAllTeams();
 
-    // cria uma constante que recebe monta o array com os valores da tabela de classificação fora de casa
     const fullLeaderboard = teams.map((team) => ({
       name: team.teamName,
       totalPoints: leaderboard.getTotalPoints(team),

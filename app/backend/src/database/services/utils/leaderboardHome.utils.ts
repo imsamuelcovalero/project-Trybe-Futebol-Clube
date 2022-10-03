@@ -92,7 +92,9 @@ const leaderboardHomeUtils = {
     const totalPoints = leaderboardHomeUtils.getTotalHomePoints(team);
     const totalGames = leaderboardHomeUtils.getTotalHomeGames(team);
     const teamPerformance = (totalPoints / (totalGames * 3)) * 100;
-    return teamPerformance;
+    // arredonda o resultado para 2 casas decimais
+    const teamPerformanceRounded = Math.round((teamPerformance + Number.EPSILON) * 100) / 100;
+    return teamPerformanceRounded;
   },
 
   // cria um método que recebe a leaderboard e retorna a mesma ordenada de acordo com os critérios

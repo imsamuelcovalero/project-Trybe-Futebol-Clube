@@ -62,7 +62,8 @@ describe('Testes para rota matches', () => {
       .stub(MatchModel, "findAll")
       .resolves(matches as unknown as MatchModel[]);
 
-    // sinon.stub(console, 'log').resolves();
+    //para ocultar os console.logs quando rodar os testes
+    sinon.stub(console, 'log').resolves();
 
     chaiHttpResponse = await chai
       .request(app).get('/matches');

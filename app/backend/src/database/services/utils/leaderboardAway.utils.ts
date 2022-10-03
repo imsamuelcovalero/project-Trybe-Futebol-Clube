@@ -90,7 +90,8 @@ const leaderboardAwayUtils = {
     const totalPoints = leaderboardAwayUtils.getTotalAwayPoints(team);
     const totalGames = leaderboardAwayUtils.getTotalAwayGames(team);
     const teamPerformance = (totalPoints / (totalGames * 3)) * 100;
-    return teamPerformance;
+    const teamPerformanceRounded = Math.round((teamPerformance + Number.EPSILON) * 100) / 100;
+    return teamPerformanceRounded;
   },
 
   // cria um método que recebe a leaderboard e retorna a mesma ordenada de acordo com os critérios de desempate
