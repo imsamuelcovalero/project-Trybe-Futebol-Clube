@@ -15,12 +15,14 @@ npm install
 * Deve ser executado o compose para subir os containers de backend, frontend e o banco de dados:
   ```
   docker-compose up -d
-  *A aplicação frontend estará rodando na porta 3000: http://localhost:3000/ do navegador e as requisições HTTP podem ser feitas na porta 3001: http://localhost:3001/ através do Insomnia, Postman ou outro API client. 
+  *A aplicação frontend estará rodando na porta 3000: http://localhost:3000/ do navegador 
+  e as requisições HTTP podem ser feitas na porta 3001: http://localhost:3001/ através do Insomnia, Postman ou outro API client. 
   ```
   * Para fazer as requisições e visualizar os logs:
     ```
     Instale as dependências dentro do backend
     Execute o comando para acessar o terminal do docker: docker exec -it app_backend sh
     Instale as dependências dentro do docker: npm install
-    O nodemon estará rodando junto com o docker compose, e é possível visualziar os logs do container pelo Docker-desktop ou extensão do Docker no VS Code
+    O nodemon estará rodando junto com o docker compose, e é possível visualziar os logs do container pelo Docker-desktop
+    ou extensão do Docker no VS Code
     ```
