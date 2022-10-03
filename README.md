@@ -1,6 +1,6 @@
 # Project Trybe Futebol Clube
 # Contexto
-No projeto de backend da Trybe, Trybe Futebol Clube, restaurei o backend de uma aplicação fullstack de campeonato brasileiro de futebol. Através de CRUDs é possível fazer login, consultar times e partidas, inserir, editar e/ou finalizar partidas. Também é possível consultar a tabela de classificação dos times, dentro de casa, fora de casa e geral. Como padrão de organização de camadas foi utilizado o MSC (Model, Service e Controller), o que contribuiu para a API ser REST. Os erros foram tratados de maneira customizada e os commits estão no padrão convencional.
+No projeto de backend da Trybe, Trybe Futebol Clube, restaurei o backend de uma aplicação fullstack de campeonato brasileiro de futebol. Através de CRUDs é possível fazer login, consultar times e partidas, inserir, editar e/ou finalizar partidas. Também é possível consultar a tabela de classificação dos times, dentro de casa, fora de casa e geral. Realizei testes de integração que cobriram mais de 80% das linhas de código. Como padrão de organização de camadas foi utilizado o MSC (Model, Service e Controller), o que contribuiu para a API ser REST. Os erros foram tratados de maneira customizada e os commits estão no padrão convencional.
 
 ## Tecnologias usadas
 Back-end:
