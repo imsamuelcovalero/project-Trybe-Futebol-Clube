@@ -8,7 +8,6 @@ Back-end:
 ## Instalando Dependências
 > Na raíz do projeto
 ```bash
-cd Project-Trybe-Futebol-Clube
 npm install
 ``` 
 ## Executando aplicação em docker
