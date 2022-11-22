@@ -23,6 +23,6 @@ npm install
     Instale as dependências dentro do backend
     Execute o comando para acessar o terminal do docker: docker exec -it app_backend sh
     Instale as dependências dentro do docker: npm install
-    O nodemon estará rodando junto com o docker compose, e é possível visualziar os logs do container pelo Docker-desktop
+    O nodemon estará rodando junto com o docker compose, e é possível visualizar os logs do container pelo Docker-desktop
     ou extensão do Docker no VS Code
     ```
